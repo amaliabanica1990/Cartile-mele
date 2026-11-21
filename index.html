@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2b211c">
+<meta name="description" content="Biblioteca ta digitală personalizabilă.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Biblioteca mea</title>
+<style>
+:root{--bg:#eee4d6;--paper:#f8f1e7;--ink:#34271f;--muted:#8e7968;--wood:#815536;--wood2:#b17d52;--accent:#a76c70;--line:#d9c8b4;--shelf-bg:#e4d4c1;--radius:16px}
+*{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;color:var(--ink);font-family:Georgia,'Times New Roman',serif;background:radial-gradient(ellipse at 10% 0%,#fff8ec 0,transparent 42%),var(--bg);min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}.top{background:#2b211c;color:#f7eddf;padding:20px max(18px,calc((100vw - 1050px)/2)) 18px;position:relative;overflow:hidden}
+.top:after{content:"";position:absolute;right:-35px;top:-75px;width:220px;height:220px;border:1px solid #ffffff18;border-radius:50%;box-shadow:0 0 0 24px #ffffff08,0 0 0 48px #ffffff06}
+.brand{font:10px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#d5b99c}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:1}
+h1{font-size:clamp(27px,5vw,38px);font-weight:normal;margin:9px 0 4px}.tag{font:12px Arial,sans-serif;color:#d7c6b3}.top-actions{display:flex;gap:8px}
+.iconbtn{border:1px solid #ffffff35;background:#ffffff12;color:#fff3e4;border-radius:50%;width:39px;height:39px;font:18px Arial,sans-serif}
+main{max-width:1050px;margin:auto;padding:18px 15px 100px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:15px}
+.btn{border:0;border-radius:25px;background:var(--ink);color:#fff6eb;padding:11px 16px;font:12px Arial,sans-serif;letter-spacing:.2px}
+.btn.alt{background:#e1d1bd;color:var(--ink)}.btn.line{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.search{flex:1;min-width:150px;border:1px solid var(--line);background:#fff9f0;border-radius:25px;padding:11px 15px;color:var(--ink);font:13px Arial,sans-serif}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0 23px}
+.stat{background:#fff9f0c9;border:1px solid var(--line);border-radius:var(--radius);padding:12px;text-align:center;box-shadow:0 3px 10px #4c32100a}
+.stat b{font-size:24px;font-weight:normal;display:block}.stat span{font:9px Arial,sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.heading{display:flex;align-items:baseline;justify-content:space-between;margin:24px 2px 12px;gap:10px}
+h2{font-size:21px;font-weight:normal;margin:0}.hint{font:11px Arial,sans-serif;color:var(--muted)}
+.filters{display:flex;gap:7px;overflow:auto;padding:0 0 9px;scrollbar-width:none}.filters button{border:1px solid var(--line);background:#f8f0e5;color:var(--muted);border-radius:22px;padding:8px 13px;white-space:nowrap;font:11px Arial,sans-serif}.filters button.active{background:var(--accent);color:white;border-color:var(--accent)}
+.shelf-wrap{margin:14px 0 24px}.shelf-label{display:flex;justify-content:space-between;align-items:center;margin:0 5px 8px}.shelf-label h3{font-size:17px;font-weight:normal;margin:0}.shelf-label span{font:10px Arial,sans-serif;color:var(--muted)}
+.shelf{position:relative;background:var(--shelf-bg);padding:17px 13px 0;border-radius:13px 13px 4px 4px;box-shadow:inset 0 0 0 1px #fff8,inset 0 8px 20px #fff2;overflow:hidden}
+.shelf:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 55px,#ffffff08 56px 58px);pointer-events:none}
+.books{position:relative;z-index:1;display:flex;align-items:flex-end;gap:7px;min-height:150px;overflow-x:auto;padding:0 3px;scrollbar-width:thin}
+.book{flex:none;width:66px;height:130px;border-radius:3px 5px 1px 1px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:9px 6px;color:#fffaf0;box-shadow:2px 2px 5px #2a1c1640,inset 5px 0 6px #0002,inset -2px 0 2px #ffffff24;cursor:pointer;background:linear-gradient(90deg,#0003,transparent 17%,#ffffff14 18%,transparent 25%),var(--cover);transition:transform .16s}
+.book:hover{transform:translateY(-5px)}.book:after{content:"";position:absolute;left:7px;top:0;bottom:0;width:1px;background:#ffffff50}
+.book-title{font-size:11px;line-height:1.18;text-shadow:0 1px 3px #0009;overflow-wrap:anywhere;max-height:75%;overflow:hidden}.book-author{position:absolute;bottom:7px;left:3px;right:3px;font:8px Arial,sans-serif;opacity:.86;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.book img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.book.covered .book-title,.book.covered .book-author{display:none}
+.book .fav{position:absolute;right:4px;top:4px;font:10px Arial,sans-serif;text-shadow:0 1px 2px #000}
+.plant{font-size:32px;align-self:flex-end;padding:0 5px 10px;filter:drop-shadow(1px 2px 1px #0002)}
+.shelf-board{height:15px;position:relative;background:linear-gradient(#c39265 0%,var(--wood2) 23%,var(--wood) 78%,#684329 100%);box-shadow:0 7px 9px #3b251b30;border-radius:2px}
+.shelf-board:after{content:"";position:absolute;left:0;right:0;top:2px;height:1px;background:#f3d2aa80}
+.empty{font:12px Arial,sans-serif;color:var(--muted);padding:35px 12px;text-align:center}
+.list{display:grid;gap:9px}.bookrow{display:flex;align-items:center;gap:11px;padding:10px;background:#fff9f0;border:1px solid var(--line);border-radius:13px}
+.mini{width:43px;height:59px;flex:none;border-radius:3px;background:var(--cover);color:#fff;display:grid;place-items:center;text-align:center;font-size:9px;padding:4px;overflow:hidden}.mini img{width:100%;height:100%;object-fit:cover}
+.info{flex:1;min-width:0}.info strong{display:block;font-size:14px;font-weight:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.info small{font:10px Arial,sans-serif;color:var(--muted)}.progress{height:4px;border-radius:4px;background:#e9ded1;margin-top:7px;overflow:hidden}.progress i{display:block;height:100%;background:var(--accent)}
+.rowbtn{border:0;background:#eadccc;color:var(--ink);border-radius:20px;padding:8px 11px;font:10px Arial,sans-serif}
+.modal{display:none;position:fixed;inset:0;background:#201711a8;z-index:10;align-items:flex-end;justify-content:center}.modal.open{display:flex}.panel{width:100%;max-width:610px;max-height:92vh;overflow:auto;background:var(--paper);border-radius:22px 22px 0 0;padding:22px 19px 30px;box-shadow:0 -10px 40px #0002}.panel h2{margin-bottom:14px}
+label{display:block;font:11px Arial,sans-serif;color:var(--muted);margin:11px 0 5px}
+input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#fffaf3;color:var(--ink);font:13px Arial,sans-serif}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.checkline{display:flex;align-items:center;gap:8px;font:12px Arial,sans-serif}.checkline input{width:auto}
+.modal-actions{display:flex;gap:8px;margin-top:18px}.modal-actions button{flex:1}
+.palette{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}.swatch{width:30px;height:30px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 1px #b9a58f;cursor:pointer}
+.settinggroup{padding:13px 0;border-bottom:1px solid var(--line)}.settinggroup h3{font-size:15px;font-weight:normal;margin:0 0 8px}.choice{display:flex;gap:7px;flex-wrap:wrap}.choice button{border:1px solid var(--line);background:#fff8ee;color:var(--ink);border-radius:20px;padding:8px 12px;font:11px Arial,sans-serif}.choice button.selected{background:var(--ink);color:#fff}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#30251f;color:white;border-radius:25px;padding:11px 17px;font:12px Arial,sans-serif;display:none;z-index:30}
+@media(min-width:650px){.modal{align-items:center}.panel{border-radius:20px}.books{min-height:170px}.book{height:145px;width:73px}.top{padding-top:27px}.stats{max-width:480px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topline"><div><div class="brand">atelier de lectură</div><h1 id="libraryName">Biblioteca mea</h1><div class="tag" id="tagline">Un loc pentru poveștile tale.</div></div><div class="top-actions"><button class="iconbtn" id="settingsBtn" aria-label="Personalizare">⚙</button></div></div></header>
+<main>
+<div class="toolbar"><button class="btn" id="addBtn">＋ Adaugă o carte</button><button class="btn alt" id="addShelfBtn">＋ Raft nou</button><input class="search" id="search" placeholder="Caută titlu sau autor…"></div>
+<div class="stats"><div class="stat"><b id="total">0</b><span>Volume</span></div><div class="stat"><b id="reading">0</b><span>În lectură</span></div><div class="stat"><b id="finished">0</b><span>Citite</span></div></div>
+<div class="heading"><h2>Rafturile tale</h2><span class="hint" id="shelfCount"></span></div><div id="shelves"></div>
+<div class="heading"><h2>Catalog</h2><span class="hint">colecția completă</span></div>
+<div class="filters" id="filters"><button class="active" data-filter="Toate">Toate</button><button data-filter="De citit">De citit</button><button data-filter="Citesc acum">Citesc acum</button><button data-filter="Citite">Citite</button><button data-filter="Favorite">Favorite</button></div>
+<div class="list" id="list"></div>
+<div class="toolbar" style="margin-top:22px"><button class="btn line" id="exportBtn">Exportă backup</button><label class="btn line" style="margin:0;display:inline-flex;align-items:center">Importă backup<input id="importFile" type="file" accept="application/json" hidden></label></div>
+</main>
+<div class="modal" id="bookModal"><div class="panel"><h2 id="bookModalTitle">Adaugă o carte</h2><form id="bookForm"><input type="hidden" id="bookId">
+<label>Titlu</label><input id="title" required placeholder="Titlul cărții">
+<label>Autor</label><input id="author" placeholder="Autorul">
+<div class="grid2"><div><label>Stare</label><select id="status"><option>De citit</option><option>Citesc acum</option><option>Citite</option></select></div><div><label>Raft</label><select id="shelfSelect"></select></div></div>
+<div class="grid2"><div><label>Pagina curentă</label><input id="page" type="number" min="0" value="0"></div><div><label>Număr total pagini</label><input id="pages" type="number" min="0" value="0"></div></div>
+<div class="grid2"><div><label>Culoare cotor</label><input id="color" type="color" value="#865b62"></div><div><label>Imagine copertă</label><input id="coverFile" type="file" accept="image/*"></div></div>
+<label class="checkline"><input id="favorite" type="checkbox"> Marchează ca favorită</label>
+<div class="modal-actions"><button type="button" class="btn alt" id="cancelBook">Renunță</button><button class="btn" type="submit">Salvează cartea</button></div></form>
+<div id="deleteArea" style="margin-top:10px;text-align:right"></div></div></div>
+<div class="modal" id="settingsModal"><div class="panel"><h2>Personalizează biblioteca</h2>
+<div class="settinggroup"><h3>Numele bibliotecii</h3><input id="customName" maxlength="35" placeholder="Biblioteca mea"></div>
+<div class="settinggroup"><h3>Atmosferă</h3><div class="choice" id="themes"><button data-theme="classic">Lemn cald</button><button data-theme="night">Bibliotecă de seară</button><button data-theme="sage">Verde salvie</button><button data-theme="rose">Roz pudrat</button></div></div>
+<div class="settinggroup"><h3>Decor pe rafturi</h3><div class="choice" id="decor"><button data-decor="none">Fără decor</button><button data-decor="plant">Plante</button><button data-decor="lamp">Luminițe</button><button data-decor="mix">Mix</button></div></div>
+<div class="settinggroup"><h3>Aspectul rafturilor</h3><div class="choice" id="shelfStyle"><button data-style="wood">Lemn</button><button data-style="light">Deschis</button><button data-style="dark">Închis</button></div></div>
+<div class="settinggroup"><h3>Mărimea cărților</h3><div class="choice" id="bookSize"><button data-size="small">Mică</button><button data-size="normal">Normală</button><button data-size="large">Mare</button></div></div>
+<div class="modal-actions"><button class="btn alt" id="closeSettings">Închide</button><button class="btn" id="saveSettings">Aplică personalizarea</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id), KEY='biblioteca-v2';
+const defaults={name:'Biblioteca mea',theme:'classic',decor:'plant',shelfStyle:'wood',bookSize:'normal'};
+let state=load(),filter='Toate',query='';
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{settings:{...defaults},shelves:['Colecția principală'],books:[]}}catch{return{settings:{...defaults},shelves:['Colecția principală'],books:[]}}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast('Spațiu insuficient. Exportă un backup și micșorează imaginile copertelor.')}render()}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function progress(b){return b.pages>0?Math.min(100,Math.round((b.page||0)/b.pages*100)):0}
+function toast(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2200)}
+function applySettings(){let s=state.settings;document.documentElement.dataset.theme=s.theme;let themes={classic:['#eee4d6','#f8f1e7','#34271f','#e4d4c1','#a76c70'],night:['#292522','#37302b','#f1e6d8','#4a4038','#c39a69'],sage:['#e6e8dc','#f6f5eb','#30372d','#d5ddc9','#71856b'],rose:['#f0e2df','#fff5f1','#47302f','#e8d0cc','#b77983']};let t=themes[s.theme]||themes.classic;['--bg','--paper','--ink','--shelf-bg','--accent'].forEach((v,i)=>document.documentElement.style.setProperty(v,t[i]));let boards={wood:['#b17d52','#815536'],light:['#d9c4a9','#b99b7c'],dark:['#6e5140','#493326']}[s.shelfStyle]||['#b17d52','#815536'];document.documentElement.style.setProperty('--wood2',boards[0]);document.documentElement.style.setProperty('--wood',boards[1]);document.documentElement.style.setProperty('--book-height',s.bookSize==='small'?'112px':s.bookSize==='large'?'158px':'130px');document.documentElement.style.setProperty('--book-width',s.bookSize==='small'?'57px':s.bookSize==='large'?'78px':'66px');$('libraryName').textContent=s.name||'Biblioteca mea'}
+function render(){applySettings();let books=state.books;$('total').textContent=books.length;$('reading').textContent=books.filter(b=>b.status==='Citesc acum').length;$('finished').textContent=books.filter(b=>b.status==='Citite').length;$('shelfCount').textContent=state.shelves.length+' rafturi';
+$('shelves').innerHTML=state.shelves.map((s,idx)=>{let bs=books.filter(b=>b.shelf===s);let deco=state.settings.decor==='plant'?'🪴':state.settings.decor==='lamp'?'✦':state.settings.decor==='mix'?(idx%2?'✦':'🪴'):'';return `<section class="shelf-wrap"><div class="shelf-label"><h3>${esc(s)}</h3><span>${bs.length} volume</span></div><div class="shelf"><div class="books">${deco?`<div class="plant">${deco}</div>`:''}${bs.length?bs.map(b=>`<div class="book ${b.cover?'covered':''}" style="--cover:${b.color}" data-book="${b.id}" title="${esc(b.title)}">${b.cover?`<img src="${b.cover}">`:''}<span class="book-title">${esc(b.title)}</span><span class="book-author">${esc(b.author)}</span>${b.favorite?'<span class="fav">★</span>':''}</div>`).join(''):'<div class="empty">Acest raft își așteaptă poveștile.</div>'}</div><div class="shelf-board"></div></div></section>`}).join('');
+let shown=books.filter(b=>(filter==='Toate'||(filter==='Favorite'?b.favorite:b.status===filter))&&(!query||(b.title+' '+b.author).toLowerCase().includes(query)));
+$('list').innerHTML=shown.length?shown.map(b=>`<div class="bookrow"><div class="mini" style="--cover:${b.color}">${b.cover?`<img src="${b.cover}">`:esc(b.title.slice(0,16))}</div><div class="info"><strong>${esc(b.title)} ${b.favorite?'★':''}</strong><small>${esc(b.author||'Autor nespecificat')} · ${esc(b.status)} · ${progress(b)}%</small><div class="progress"><i style="width:${progress(b)}%"></i></div></div><button class="rowbtn" data-edit="${b.id}">Editează</button></div>`).join(''):'<div class="empty">Nu am găsit cărți în această selecție.</div>';
+$('shelfSelect').innerHTML=state.shelves.map(s=>`<option>${esc(s)}</option>`).join('')}
+function showModal(id){$(id).classList.add('open')}function hideModal(id){$(id).classList.remove('open')}
+function editBook(b=null){$('bookForm').reset();$('bookId').value=b?.id||'';$('bookModalTitle').textContent=b?'Editează volumul':'Adaugă o carte';$('title').value=b?.title||'';$('author').value=b?.author||'';$('status').value=b?.status||'De citit';$('page').value=b?.page||0;$('pages').value=b?.pages||0;$('color').value=b?.color||['#87545d','#526a72','#b17d52','#657b5d','#655779','#9b674f'][state.books.length%6];$('favorite').checked=!!b?.favorite;$('shelfSelect').value=b?.shelf||state.shelves[0];$('coverFile').value='';$('deleteArea').innerHTML=b?'<button type="button" class="rowbtn" id="deleteBook">Șterge cartea</button>':'';showModal('bookModal');if(b)$('deleteBook').onclick=()=>{if(confirm('Ștergi această carte din bibliotecă?')){state.books=state.books.filter(x=>x.id!==b.id);hideModal('bookModal');persist()}}}
+$('addBtn').onclick=()=>editBook();$('cancelBook').onclick=()=>hideModal('bookModal');$('addShelfBtn').onclick=()=>{let name=prompt('Numele noului raft:');if(name&&name.trim()&&!state.shelves.includes(name.trim())){state.shelves.push(name.trim());persist()}};
+$('bookForm').onsubmit=async e=>{e.preventDefault();let id=$('bookId').value||String(Date.now()),old=state.books.find(b=>b.id===id),cover=old?.cover||'',file=$('coverFile').files[0];if(file)cover=await new Promise(resolve=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.readAsDataURL(file)});let b={id,title:$('title').value.trim(),author:$('author').value.trim(),status:$('status').value,shelf:$('shelfSelect').value,page:+$('page').value,pages:+$('pages').value,color:$('color').value,cover,favorite:$('favorite').checked};let i=state.books.findIndex(x=>x.id===id);if(i<0)state.books.push(b);else state.books[i]=b;hideModal('bookModal');persist();toast('Cartea a fost salvată')};
+$('shelves').onclick=e=>{let el=e.target.closest('[data-book]');if(el)editBook(state.books.find(b=>b.id===el.dataset.book))};$('list').onclick=e=>{let el=e.target.closest('[data-edit]');if(el)editBook(state.books.find(b=>b.id===el.dataset.edit))};
+$('filters').onclick=e=>{let b=e.target.closest('[data-filter]');if(!b)return;filter=b.dataset.filter;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('active',x===b));render()};
+$('search').oninput=e=>{query=e.target.value.toLowerCase();render()};
+$('settingsBtn').onclick=()=>{let s=state.settings;$('customName').value=s.name||'';[['themes','theme'],['decor','decor'],['shelfStyle','style'],['bookSize','size']].forEach(([id,key])=>{let val=key==='style'?s.shelfStyle:key==='size'?s.bookSize:s[key];document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('selected',b.dataset[key]===val))});showModal('settingsModal')};
+$('closeSettings').onclick=() =>hideModal('settingsModal');$('saveSettings').onclick=()=>{state.settings.name=$('customName').value.trim()||'Biblioteca mea';state.settings.theme=document.querySelector('#themes .selected')?.dataset.theme||'classic';state.settings.decor=document.querySelector('#decor .selected')?.dataset.decor||'plant';state.settings.shelfStyle=document.querySelector('#shelfStyle .selected')?.dataset.style||'wood';state.settings.bookSize=document.querySelector('#bookSize .selected')?.dataset.size||'normal';hideModal('settingsModal');persist();toast('Aspectul bibliotecii a fost actualizat')};
+[['themes','theme'],['decor','decor'],['shelfStyle','style'],['bookSize','size']].forEach(([id,key])=>$(id).onclick=e=>{let b=e.target.closest('button');if(!b)return;$(id).querySelectorAll('button').forEach(x=>x.classList.toggle('selected',x===b))});
+$('exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify(state)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='biblioteca-mea-backup.json';a.click();URL.revokeObjectURL(a.href)};
+$('importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(Array.isArray(d.books)&&Array.isArray(d.shelves)){state={settings:{...defaults,...d.settings},...d};persist();toast('Backup importat')}else toast('Fișier invalid')}catch{toast('Fișier invalid')}};r.readAsText(f)};
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+render();
+</script>
+</body></html>

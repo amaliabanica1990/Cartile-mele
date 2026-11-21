@@ -1,0 +1,26 @@
+BIBLIOTECA MEA — PWA personalizabilă
+
+CE INCLUDE
+- Rafturi nelimitate și adăugare/editare/ștergere cărți.
+- Coperți încărcate din telefon, culori de cotor, progres pagini.
+- Stări: De citit, Citesc acum, Citite; favorite; căutare și filtre.
+- Personalizare: nume bibliotecă, 4 teme, decor (plante/luminițe/mix), stilul lemnului și mărimea cărților.
+- Export/import backup JSON.
+- PWA manifest + service worker pentru instalare și cache offline.
+
+PUBLICARE HTTPS — pasul necesar pentru instalarea ca aplicație
+Această arhivă este pregătită pentru hosting static HTTPS. Nu este un APK și nu este încă publicată pe internet.
+Variantă simplă: GitHub Pages
+1. Creează/loghează-te într-un cont GitHub.
+2. Creează un repository nou, de exemplu `biblioteca-mea`.
+3. Încarcă TOATE fișierele din arhivă (index.html, manifest.webmanifest, sw.js, icon.svg, icon-192.png, icon-512.png) în rădăcina repository-ului.
+4. În repository: Settings → Pages → Build and deployment → Deploy from a branch → `main` și `/ (root)` → Save.
+5. Așteaptă publicarea; GitHub va afișa adresa HTTPS de forma `https://NUME.github.io/biblioteca-mea/`.
+6. Deschide acea adresă în Chrome pe Android → meniul ⋮ → „Instalează aplicația” sau „Adaugă la ecranul de pornire”.
+Nu îmi trimite parola. Dacă dorești ghidare, trimite doar numele de utilizator GitHub sau o captură a ecranului Settings → Pages (fără informații private).
+
+DATE ȘI BACKUP
+- Cărțile și setările se păstrează în stocarea locală a browserului/dispozitivului.
+- Exportă periodic backup; dacă ștergi datele site-ului/browserului, biblioteca locală poate fi ștearsă.
+- Imaginile copertelor sunt stocate local și pot crește dimensiunea datelor.
+- Pentru a folosi aceeași bibliotecă pe mai multe dispozitive, importă backup-ul pe celălalt dispozitiv; sincronizarea în cloud nu este inclusă.
